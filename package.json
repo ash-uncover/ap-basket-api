@@ -1,0 +1,48 @@
+{
+  "name": "ap-basket-api",
+  "version": "1.0.0",
+  "description": "",
+  "author": "aSH <ash.uncover@gmail.com>",
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
+    "start:dev": "nodemon --inspect './src/index'",
+    "test": "jest",
+    "test-coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@uncover/js-utils": "latest",
+    "@uncover/js-utils-logger": "latest",
+    "express": "latest",
+    "mongoose": "latest",
+    "nodemailer": "latest",
+    "uuid": "latest"
+  },
+  "devDependencies": {
+    "@types/express": "latest",
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "eslint": "latest",
+    "eslint-plugin-import": "latest",
+    "jest": "latest",
+    "nodemon": "latest",
+    "ts-jest": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
+  }
+}

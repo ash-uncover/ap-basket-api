@@ -1,0 +1,6 @@
+**/node_modules
+__coverage__
+/dist
+.deployment
+.vscode
+config.json
