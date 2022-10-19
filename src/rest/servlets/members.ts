@@ -6,6 +6,7 @@ import {
   defaultPut,
   defaultPatch,
   defaultDelete,
+  defaultGetAll,
 } from '../../rest/servlet-base'
 
 import Logger from '@uncover/js-utils-logger'
@@ -13,6 +14,10 @@ const LOGGER = new Logger('REST-MEMBERS')
 
 export const postMember = function(req, res, next) {
   defaultPost(SCHEMAS.MEMBERS, req, res, next, null)
+}
+
+export const getMembers = function(req, res, next) {
+  defaultGetAll(SCHEMAS.MEMBERS, req, res, next, null)
 }
 
 export const getMember = function(req, res, next) {
@@ -32,7 +37,8 @@ export const deleteMember = function(req, res, next) {
 }
 
 const addRoutes = (app) => {
-  app.post('/rest/members/', postMember)
+  app.post('/rest/members', postMember)
+  app.get('/rest/members', getMembers)
   app.get('/rest/members/:memberId', getMember)
   app.put('/rest/members/:memberId', putMember)
   app.patch('/rest/members/:memberId', patchMember)

@@ -48,6 +48,14 @@ export const getUser = function(req, res, next) {
   }
 }
 
+export const getUserMembers = function(req, res, next) {
+  try {
+    defaultGetDeep(SCHEMAS.MEMBERS, req, res, next, null)
+  } catch (error) {
+    res.send(500, error)
+  }
+}
+
 export const putUser = function(req, res, next) {
   LOGGER.debug(JSON.stringify(req.body))
   try {
@@ -106,6 +114,7 @@ export const deleteUser = function(req, res, next) {
 
 const addRoutes = (app) => {
   app.get('/rest/users/:userId', getUser)
+  app.get('/rest/users/:userId/members', getUserMembers)
   app.put('/rest/users/:userId', putUser)
   app.patch('/rest/users/:userId', patchUser)
   app.delete('/rest/users/:userId', deleteUser)

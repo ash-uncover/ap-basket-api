@@ -101,19 +101,19 @@ SectionSchema.pre('save', preSave)
 export const SectionModel = mongoose.model<ISection>(SectionCollection, SectionSchema)
 
 
-// Memberships collection
-export const MembershipName = 'membership'
-export const MembershipCollection = `${MembershipName}s`
-export interface IMembership extends DocumentBase {
+// Members collection
+export const MemberName = 'member'
+export const MemberCollection = `${MemberName}s`
+export interface IMember extends DocumentBase {
   sectionId: string,
   userId: string,
 }
-export const MembershipSchema = new mongoose.Schema(Object.assign({
+export const MemberSchema = new mongoose.Schema(Object.assign({
   sectionId: { type: String, required: true },
   userId: { type: String, required: true },
 }, SchemaBase))
-MembershipSchema.pre('save', preSave)
-export const MembershipModel = mongoose.model(MembershipCollection, MembershipSchema)
+MemberSchema.pre('save', preSave)
+export const MemberModel = mongoose.model(MemberCollection, MemberSchema)
 
 // SESSIONS collection
 export const SessionName = 'session'
@@ -162,9 +162,9 @@ const SCHEMAS = {
     collection: SectionCollection,
   },
   MEMBERS: {
-    model: MembershipModel,
-    name: MembershipName,
-    collection: MembershipCollection,
+    model: MemberModel,
+    name: MemberName,
+    collection: MemberCollection,
   },
   SESSIONS: {
     model: SessionModel,
