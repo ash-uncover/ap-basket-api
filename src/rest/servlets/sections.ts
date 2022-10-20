@@ -44,6 +44,14 @@ export const getSectionMembers = function(req, res, next) {
   }
 }
 
+export const getSectionSessions = function(req, res, next) {
+  try {
+    defaultGetDeep(SCHEMAS.SESSIONS, req, res, next, null)
+  } catch (error) {
+    res.send(500, error)
+  }
+}
+
 const addRoutes = (app) => {
   app.post('/rest/sections/', postSection)
   app.get('/rest/sections/:sectionId', getSection)
@@ -51,6 +59,7 @@ const addRoutes = (app) => {
   app.delete('/rest/sections/:sectionId', deleteSection)
 
   app.get('/rest/sections/:sectionId/members', getSectionMembers)
+  app.get('/rest/sections/:sectionId/sessions', getSectionSessions)
 }
 
 export default addRoutes
