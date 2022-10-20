@@ -48,14 +48,6 @@ export const getUser = function(req, res, next) {
   }
 }
 
-export const getUserMembers = function(req, res, next) {
-  try {
-    defaultGetDeep(SCHEMAS.MEMBERS, req, res, next, null)
-  } catch (error) {
-    res.send(500, error)
-  }
-}
-
 export const putUser = function(req, res, next) {
   LOGGER.debug(JSON.stringify(req.body))
   try {
@@ -112,12 +104,30 @@ export const deleteUser = function(req, res, next) {
   }
 }
 
+export const getUserMembers = function(req, res, next) {
+  try {
+    defaultGetDeep(SCHEMAS.MEMBERS, req, res, next, null)
+  } catch (error) {
+    res.send(500, error)
+  }
+}
+
+export const getUserParticipants = function(req, res, next) {
+  try {
+    defaultGetDeep(SCHEMAS.PARTICIPANTS, req, res, next, null)
+  } catch (error) {
+    res.send(500, error)
+  }
+}
+
 const addRoutes = (app) => {
   app.get('/rest/users/:userId', getUser)
-  app.get('/rest/users/:userId/members', getUserMembers)
   app.put('/rest/users/:userId', putUser)
   app.patch('/rest/users/:userId', patchUser)
   app.delete('/rest/users/:userId', deleteUser)
+
+  app.get('/rest/users/:userId/members', getUserMembers)
+  app.get('/rest/users/:userId/participants', getUserParticipants)
 }
 
 export default addRoutes

@@ -137,11 +137,15 @@ export const SessionModel = mongoose.model(SessionCollection, SessionSchema)
 export const ParticipantName = 'participant'
 export const ParticipantCollection = `${ParticipantName}s`
 export interface IParticipant extends DocumentBase {
-  sectionId: string,
+  sessionId: string,
+  userId: string,
+  status: string,
   date: Date,
 }
 export const ParticipantSchema = new mongoose.Schema(Object.assign({
-  sectionId: { type: String },
+  sessionId: { type: String },
+  userId: { type: String },
+  status: { type: String },
   date: { type: Date },
 }, SchemaBase))
 ParticipantSchema.pre('save', preSave)
