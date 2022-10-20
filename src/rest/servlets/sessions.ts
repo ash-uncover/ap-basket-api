@@ -6,6 +6,7 @@ import {
   defaultPut,
   defaultDelete,
   defaultGetDeep,
+  defaultGetAll,
 } from '../../rest/servlet-base'
 
 import Logger from '@uncover/js-utils-logger'
@@ -13,6 +14,10 @@ const LOGGER = new Logger('REST-THREADS')
 
 export const postSession = function(req, res, next) {
   defaultPost(SCHEMAS.SESSIONS, req, res, next, null)
+}
+
+export const getSessions = function(req, res, next) {
+  defaultGetAll(SCHEMAS.SESSIONS, req, res, next, null)
 }
 
 export const getSession = function(req, res, next) {
@@ -40,7 +45,8 @@ export const getSessionParticipants = function(req, res, next) {
 }
 
 const addRoutes = (app) => {
-  app.post('/rest/sessions/', postSession)
+  app.post('/rest/sessions', postSession)
+  app.get('/rest/sessions', getSessions)
   app.get('/rest/sessions/:sessionId', getSession)
   app.put('/rest/sessions/:sessionId', putSession)
   app.patch('/rest/sessions/:sessionId', patchSession)

@@ -13,12 +13,15 @@ export interface DocumentBase extends mongoose.Document {
   _lastUpdateDate: Date
 }
 
-export const RESERVED_FIELDS = [
+export const INTERNAL_FIELDS = [
   '_id',
   '_creationDate',
   '_lastUpdateDate',
   '_deleted',
   '__v',
+]
+export const RESERVED_FIELDS = [
+  ...INTERNAL_FIELDS,
   'id',
 ]
 
@@ -101,7 +104,7 @@ SectionSchema.pre('save', preSave)
 export const SectionModel = mongoose.model<ISection>(SectionCollection, SectionSchema)
 
 
-// Members collection
+// MEMBERS collection
 export const MemberName = 'member'
 export const MemberCollection = `${MemberName}s`
 export interface IMember extends DocumentBase {
