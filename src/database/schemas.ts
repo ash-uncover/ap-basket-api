@@ -131,7 +131,6 @@ export interface ISession extends DocumentBase {
   sectionId: string,
   maxParticpants: number,
   date: Date,
-  roles: { type: [String] },
 }
 export const SessionSchema = new mongoose.Schema(Object.assign({
   sectionId: { type: String, required: true },
@@ -154,8 +153,8 @@ export interface IParticipant extends DocumentBase {
 export const ParticipantSchema = new mongoose.Schema(Object.assign({
   sessionId: { type: String, required: true },
   userId: { type: String, required: true },
-  status: { type: String, required: true },
-  date: { type: Date, required: true },
+  status: { type: String },
+  statusDate: { type: Date },
 }, SchemaBase))
 ParticipantSchema.pre('save', preSave)
 export const ParticipantModel = mongoose.model(ParticipantCollection, ParticipantSchema)

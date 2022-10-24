@@ -16,9 +16,10 @@ import {
   deleteAuth,
 } from '../rest/servlets/auth'
 
-import addMessagesRoutes from '../rest/servlets/members'
-import addRelationsRoutes from '../rest/servlets/sections'
-import addThreadsRoutes from '../rest/servlets/sessions'
+import addMembersRoutes from '../rest/servlets/members'
+import addParticipantsRoutes from '../rest/servlets/participants'
+import addSectionsRoutes from '../rest/servlets/sections'
+import addSessionsRoutes from '../rest/servlets/sessions'
 import addUsersRoutes from '../rest/servlets/users'
 
 const LOGGER = new Logger('REST')
@@ -103,9 +104,10 @@ app.use(useAuth)
 app.get('/auth', getAuth)
 app.delete('/auth', deleteAuth)
 
-addMessagesRoutes(app)
-addRelationsRoutes(app)
-addThreadsRoutes(app)
+addMembersRoutes(app)
+addParticipantsRoutes(app)
+addSectionsRoutes(app)
+addSessionsRoutes(app)
 addUsersRoutes(app)
 
 export default app

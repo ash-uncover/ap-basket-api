@@ -19,7 +19,7 @@ export const handleError = (error, res, onError?) => {
   onError ? onError(error) : res.status(HttpUtils.HttpStatus.ERROR).send(error)
 }
 
-const FIELD_FILTERING = INTERNAL_FIELDS.map(f => `-${f}`).join(' ')
+export const FIELD_FILTERING = INTERNAL_FIELDS.map(f => `-${f}`).join(' ')
 
 export const defaultGetAll = async (schema, req, res, next?, onError?) => {
   try {
@@ -75,6 +75,7 @@ export const defaultPatch = async (schema, req, res, next, onError) => {
     let data = await schema.model.findOne({ id }).exec()
     if (data) {
       Object.assign(data, removeReserved(req.body))
+      await data.save()
       data = await schema.model.findOne({ id }).select(FIELD_FILTERING).exec()
       data ? res.json(data) : res.sendStatus(HttpUtils.HttpStatus.NOT_FOUND)
     } else {
