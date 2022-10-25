@@ -8,17 +8,21 @@ const LOGGER = new Logger('Mongo Connection')
 let urlmongo = CONFIG.ALPHA_BASKET_DATABASE_CONN
 
 const connection = {
-  open: (callback) => {
+  open: (done) => {
 
-    console.log(urlmongo)
+    LOGGER.info(urlmongo)
     mongoose.connect(urlmongo, {})
       .then(() => {
         LOGGER.info(`Connected to database "${urlmongo}"`)
-        callback && callback()
+        done && done()
       })
       .catch(() => {
         LOGGER.error(`Failed to connect to database "${urlmongo}"`)
       })
+  },
+
+  close: (done) => {
+    mongoose.disconnect(done);
   }
 }
 

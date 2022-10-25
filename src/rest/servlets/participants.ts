@@ -1,19 +1,39 @@
-import SCHEMAS from '../../database/schemas'
+import {
+  v4 as uuidv4
+} from 'uuid'
+
+import SCHEMAS, { removeReserved } from '../../database/schemas'
 
 import {
   defaultGet,
-  defaultPost,
-  defaultPatch,
   handleError,
   FIELD_FILTERING,
+  checkExists,
 } from '../../rest/servlet-base'
 
 import Logger from '@uncover/js-utils-logger'
 import { HttpUtils } from '@uncover/js-utils'
 const LOGGER = new Logger('REST-PARTICIPANTS')
 
-export const postParticipant = function(req, res, next) {
-  defaultPost(SCHEMAS.PARTICIPANTS, req, res, next, null)
+export const checkParticipant = function(req, res, next) {
+  try {
+    checkExists(SCHEMAS.PARTICIPANTS, req, res, next, null)
+  } catch (error) {
+    res.send(500, error)
+  }
+}
+
+export const postParticipant = async function(req, res, next) {
+  try {
+    const data = new SCHEMAS.PARTICIPANTS.model(removeReserved(req.body))
+    data.id = uuidv4()
+    data.statusDate = new Date()
+    await data.save()
+    const created = await SCHEMAS.PARTICIPANTS.model.findOne({ id: data.id }).select(FIELD_FILTERING).exec()
+    res.status(HttpUtils.HttpStatus.CREATED).json(created)
+  } catch (error) {
+    handleError(error, res)
+  }
 }
 
 export const getParticipant = function(req, res, next) {
@@ -47,9 +67,9 @@ export const putParticipantStatus = async function(req, res, next) {
 const addRoutes = (app) => {
   app.post('/rest/participants', postParticipant)
 
-  app.get('/rest/participants/:participantId', getParticipant)
+  app.get('/rest/participants/:participantId', checkParticipant, getParticipant)
 
-  app.put('/rest/participants/:participantId/status', putParticipantStatus)
+  app.put('/rest/participants/:participantId/status', checkParticipant, putParticipantStatus)
 
 }
 export default addRoutes

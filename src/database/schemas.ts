@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 // Common stuf
 export const SchemaBase = {
-  id: { type: String, required: true },
+  id: { type: String, required: true, index: true },
   _creationDate: { type: Date },
   _lastUpdateDate: { type: Date }
 }
@@ -70,7 +70,8 @@ export const AccountSchema = new mongoose.Schema(Object.assign({
   actionDate: { type: Date },
 }, SchemaBase))
 AccountSchema.pre('save', preSave)
-export const AccountModel = mongoose.model<IAccount>(AccountCollection, AccountSchema)
+export const createAccountModel = () => mongoose.model<IAccount>(AccountCollection, AccountSchema)
+export const AccountModel = createAccountModel()
 
 
 // USERS collection
@@ -89,7 +90,8 @@ export const UserSchema = new mongoose.Schema(Object.assign({
   roles: { type: [String] },
 }, SchemaBase))
 UserSchema.pre('save', preSave)
-export const UserModel = mongoose.model<IUser>(UserCollection, UserSchema)
+export const createUserModel = () => mongoose.model<IUser>(UserCollection, UserSchema)
+export const UserModel = createUserModel()
 
 
 // SECTIONS collection
@@ -102,7 +104,8 @@ export const SectionSchema = new mongoose.Schema(Object.assign({
   name: { type: String, required: true },
 }, SchemaBase))
 SectionSchema.pre('save', preSave)
-export const SectionModel = mongoose.model<ISection>(SectionCollection, SectionSchema)
+export const createSectionModel = () => mongoose.model<ISection>(SectionCollection, SectionSchema)
+export const SectionModel = createSectionModel()
 
 
 // MEMBERS collection
@@ -121,7 +124,8 @@ export const MemberSchema = new mongoose.Schema(Object.assign({
   roles: { type: [String] },
 }, SchemaBase))
 MemberSchema.pre('save', preSave)
-export const MemberModel = mongoose.model(MemberCollection, MemberSchema)
+export const createMemberModel = () => mongoose.model<IMember>(MemberCollection, MemberSchema)
+export const MemberModel = createMemberModel()
 
 
 // SESSIONS collection
@@ -138,7 +142,8 @@ export const SessionSchema = new mongoose.Schema(Object.assign({
   date: { type: Date, required: true },
 }, SchemaBase))
 SessionSchema.pre('save', preSave)
-export const SessionModel = mongoose.model(SessionCollection, SessionSchema)
+export const createSessionModel = () => mongoose.model<ISession>(SessionCollection, SessionSchema)
+export const SessionModel = createSessionModel()
 
 
 // PARTICIPANTS collection
@@ -148,7 +153,7 @@ export interface IParticipant extends DocumentBase {
   sessionId: string,
   userId: string,
   status: string,
-  date: Date,
+  statusDate: Date,
 }
 export const ParticipantSchema = new mongoose.Schema(Object.assign({
   sessionId: { type: String, required: true },
@@ -157,7 +162,8 @@ export const ParticipantSchema = new mongoose.Schema(Object.assign({
   statusDate: { type: Date },
 }, SchemaBase))
 ParticipantSchema.pre('save', preSave)
-export const ParticipantModel = mongoose.model(ParticipantCollection, ParticipantSchema)
+export const createParticipantModel = () => mongoose.model<IParticipant>(ParticipantCollection, ParticipantSchema)
+export const ParticipantModel = createParticipantModel()
 
 
 const SCHEMAS = {

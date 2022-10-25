@@ -52,6 +52,20 @@ export const defaultGet = async (schema, req, res, next, onError) => {
   }
 }
 
+export const checkExists = async (schema, req, res, next, onError) => {
+  const id = req.params[`${schema.name}Id`]
+  try {
+    const data = await schema.model.findOne({ id }).select(FIELD_FILTERING).exec()
+    if (data) {
+      next()
+    } else {
+      res.sendStatus(HttpUtils.HttpStatus.NOT_FOUND)
+    }
+  } catch (error) {
+    handleError(error, res, onError)
+  }
+}
+
 export const defaultPut = async (schema, req, res, next, onError) => {
   const id = req.params[`${schema.name}Id`]
   try {

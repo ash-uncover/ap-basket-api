@@ -36,8 +36,8 @@ try {
   LOGGER.warn('Failed to load from process.env')
 }
 
-console.log('== -----------------------------')
-Object.keys(CONFIG).forEach((key) => console.log(`== ${key}: ${CONFIG[key]}`))
-console.log('== -----------------------------')
+LOGGER.info('== -----------------------------')
+Object.keys(CONFIG).forEach((key) => LOGGER.info(`== ${key}: ${CONFIG[key]}`))
+LOGGER.info('== -----------------------------')
 
 export default CONFIG

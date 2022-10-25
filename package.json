@@ -28,6 +28,7 @@
     "eslint-plugin-import": "latest",
     "jest": "latest",
     "nodemon": "latest",
+    "supertest": "^6.3.1",
     "ts-jest": "latest",
     "ts-node": "latest",
     "typescript": "latest"

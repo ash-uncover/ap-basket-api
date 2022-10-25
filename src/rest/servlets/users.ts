@@ -11,10 +11,19 @@ import {
   defaultPatch,
   defaultDelete,
   defaultGetDeep,
+  checkExists,
 } from '../../rest/servlet-base'
 
 import Logger from '@uncover/js-utils-logger'
 const LOGGER = new Logger('REST-USERS')
+
+export const checkUser = function(req, res, next) {
+  try {
+    checkExists(SCHEMAS.USERS, req, res, next, null)
+  } catch (error) {
+    res.send(500, error)
+  }
+}
 
 export const postUser = function(req, res, next) {
 
@@ -121,13 +130,13 @@ export const getUserParticipants = function(req, res, next) {
 }
 
 const addRoutes = (app) => {
-  app.get('/rest/users/:userId', getUser)
-  app.put('/rest/users/:userId', putUser)
-  app.patch('/rest/users/:userId', patchUser)
-  app.delete('/rest/users/:userId', deleteUser)
+  app.get('/rest/users/:userId', checkUser, getUser)
+  app.put('/rest/users/:userId', checkUser, putUser)
+  app.patch('/rest/users/:userId', checkUser, patchUser)
+  app.delete('/rest/users/:userId', checkUser, deleteUser)
 
-  app.get('/rest/users/:userId/members', getUserMembers)
-  app.get('/rest/users/:userId/participants', getUserParticipants)
+  app.get('/rest/users/:userId/members', checkUser, getUserMembers)
+  app.get('/rest/users/:userId/participants', checkUser, getUserParticipants)
 }
 
 export default addRoutes
