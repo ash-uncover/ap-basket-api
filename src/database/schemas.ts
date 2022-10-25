@@ -133,12 +133,12 @@ export const SessionName = 'session'
 export const SessionCollection = `${SessionName}s`
 export interface ISession extends DocumentBase {
   sectionId: string,
-  maxParticpants: number,
+  maxParticipants: number,
   date: Date,
 }
 export const SessionSchema = new mongoose.Schema(Object.assign({
   sectionId: { type: String, required: true },
-  maxParticpants: { type: Number, required: true },
+  maxParticipants: { type: Number, required: true },
   date: { type: Date, required: true },
 }, SchemaBase))
 SessionSchema.pre('save', preSave)

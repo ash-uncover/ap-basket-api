@@ -9,7 +9,7 @@
     "build": "tsc",
     "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
     "start:dev": "nodemon --inspect './src/index'",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test-coverage": "jest --coverage"
   },
   "dependencies": {

@@ -5,16 +5,13 @@ import connection from '../../../../src/database/connection'
 import { LogConfig } from '@uncover/js-utils-logger';
 import { HttpUtils } from '@uncover/js-utils';
 import SCHEMAS from '../../../../src/database/schemas';
-import { ACCOUNT_1, resetDatabase, USER_1 } from '../test.data';
+import { ACCOUNT_1, resetDatabase, TOKEN_1, USER_1 } from '../test.data';
 
 describe('/users', () => {
 
-  const TOKEN = 'Basic YTph'
-  const USER_1_ID = 'user1'
-
   beforeAll((done) => {
-    connection.open(() => done())
     LogConfig.off()
+    connection.open(() => done())
   })
 
   beforeEach((done) => {
@@ -23,11 +20,13 @@ describe('/users', () => {
         new SCHEMAS.ACCOUNTS.model(ACCOUNT_1).save(),
         new SCHEMAS.USERS.model(USER_1).save(),
       ]))
-      .then(() => done())
+      .then((result) => {
+        done()
+      })
   })
 
   afterAll((done) => {
-    resetDatabase().then(() => connection.close(done))
+    resetDatabase().then(() => connection.close(() => done()))
   })
 
   describe('/:userId', () => {
@@ -36,7 +35,7 @@ describe('/users', () => {
 
       test('When no token is provided', () => {
         return request(app)
-          .get(`/rest/users/${USER_1_ID}`)
+          .get(`/rest/users/${USER_1.id}`)
           .then(response => {
             expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
           })
@@ -45,7 +44,7 @@ describe('/users', () => {
       test('When accessing a user that does not exist', () => {
         return request(app)
           .get('/rest/users/dummy')
-          .set({ Authorization: TOKEN })
+          .set({ Authorization: TOKEN_1 })
           .then(response => {
             expect(response.statusCode).toBe(HttpUtils.HttpStatus.NOT_FOUND)
           })
@@ -53,8 +52,8 @@ describe('/users', () => {
 
       test('When a valid token is provided', () => {
         return request(app)
-          .get(`/rest/users/${USER_1_ID}`)
-          .set({ Authorization: TOKEN })
+          .get(`/rest/users/${USER_1.id}`)
+          .set({ Authorization: TOKEN_1 })
           .then(response => {
             expect(response.statusCode).toBe(HttpUtils.HttpStatus.OK)
           })
@@ -65,7 +64,7 @@ describe('/users', () => {
 
       test('When no token is provided', () => {
         return request(app)
-          .patch(`/rest/users/${USER_1_ID}`)
+          .patch(`/rest/users/${USER_1.id}`)
           .then(response => {
             expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
           })
@@ -74,7 +73,7 @@ describe('/users', () => {
       test('When accessing a user that does not exist', () => {
         return request(app)
           .patch('/rest/users/dummy')
-          .set({ Authorization: TOKEN })
+          .set({ Authorization: TOKEN_1 })
           .then(response => {
             expect(response.statusCode).toBe(HttpUtils.HttpStatus.NOT_FOUND)
           })
@@ -85,7 +84,7 @@ describe('/users', () => {
 
       test('When no token is provided', () => {
         return request(app)
-          .delete(`/rest/users/${USER_1_ID}`)
+          .delete(`/rest/users/${USER_1.id}`)
           .then(response => {
             expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
           })
@@ -94,7 +93,7 @@ describe('/users', () => {
       test('When accessing a user that does not exist', () => {
         return request(app)
           .delete('/rest/users/dummy')
-          .set({ Authorization: TOKEN })
+          .set({ Authorization: TOKEN_1 })
           .then(response => {
             expect(response.statusCode).toBe(HttpUtils.HttpStatus.NOT_FOUND)
           })
@@ -107,7 +106,7 @@ describe('/users', () => {
 
         test('When no token is provided', () => {
           return request(app)
-            .get(`/rest/users/${USER_1_ID}/members`)
+            .get(`/rest/users/${USER_1.id}/members`)
             .then(response => {
               expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
             })
@@ -116,7 +115,7 @@ describe('/users', () => {
         test('When accessing a user that does not exist', () => {
           return request(app)
             .get('/rest/users/dummy/members')
-            .set({ Authorization: TOKEN })
+            .set({ Authorization: TOKEN_1 })
             .then(response => {
               expect(response.statusCode).toBe(HttpUtils.HttpStatus.NOT_FOUND)
             })
@@ -124,8 +123,8 @@ describe('/users', () => {
 
         test('When the call is valid', () => {
           return request(app)
-            .get(`/rest/users/${USER_1_ID}/members`)
-            .set({ Authorization: TOKEN })
+            .get(`/rest/users/${USER_1.id}/members`)
+            .set({ Authorization: TOKEN_1 })
             .then(response => {
               expect(response.statusCode).toBe(HttpUtils.HttpStatus.OK)
             })
@@ -139,7 +138,7 @@ describe('/users', () => {
 
         test('When no token is provided', () => {
           return request(app)
-            .get(`/rest/users/${USER_1_ID}/participants`)
+            .get(`/rest/users/${USER_1.id}/participants`)
             .then(response => {
               expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
             })
@@ -148,7 +147,7 @@ describe('/users', () => {
         test('When accessing a user that does not exist', () => {
           return request(app)
             .get('/rest/users/dummy/participants')
-            .set({ Authorization: TOKEN })
+            .set({ Authorization: TOKEN_1 })
             .then(response => {
               expect(response.statusCode).toBe(HttpUtils.HttpStatus.NOT_FOUND)
             })
@@ -156,8 +155,8 @@ describe('/users', () => {
 
         test('When the call is valid', () => {
           return request(app)
-            .get(`/rest/users/${USER_1_ID}/participants`)
-            .set({ Authorization: TOKEN })
+            .get(`/rest/users/${USER_1.id}/participants`)
+            .set({ Authorization: TOKEN_1 })
             .then(response => {
               expect(response.statusCode).toBe(HttpUtils.HttpStatus.OK)
             })
