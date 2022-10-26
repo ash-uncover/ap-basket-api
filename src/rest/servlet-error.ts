@@ -49,7 +49,32 @@ const ERRORS = {
   AUTH_REGISTER_CONFIRM_TOKEN_EXPIRED: {
     error: 'AUTH_REGISTER_CONFIRM_TOKEN_EXPIRED',
     status: HttpUtils.HttpStatus.FORBIDDEN
-  }
+  },
+
+  MEMBER_NOT_FOUND: {
+    error: 'MEMBER_NOT_FOUND',
+    status: HttpUtils.HttpStatus.NOT_FOUND
+  },
+
+  PARTICIPANT_NOT_FOUND: {
+    error: 'PARTICIPANT_NOT_FOUND',
+    status: HttpUtils.HttpStatus.NOT_FOUND
+  },
+
+  SECTION_NOT_FOUND: {
+    error: 'SECTION_NOT_FOUND',
+    status: HttpUtils.HttpStatus.NOT_FOUND
+  },
+
+  SESSION_NOT_FOUND: {
+    error: 'SESSION_NOT_FOUND',
+    status: HttpUtils.HttpStatus.NOT_FOUND
+  },
+
+  USER_NOT_FOUND: {
+    error: 'USER_NOT_FOUND',
+    status: HttpUtils.HttpStatus.NOT_FOUND
+  },
 }
 
 export default ERRORS

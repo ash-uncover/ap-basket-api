@@ -1,11 +1,12 @@
 import request from 'supertest'
 
+import { LogConfig } from '@uncover/js-utils-logger'
+import { HttpUtils } from '@uncover/js-utils'
+
 import app from '../../../../src/rest'
 import connection from '../../../../src/database/connection'
-import { LogConfig } from '@uncover/js-utils-logger';
-import { HttpUtils } from '@uncover/js-utils';
-import SCHEMAS from '../../../../src/database/schemas';
-import { ACCOUNT_1, resetDatabase, TOKEN_1, USER_1 } from '../test.data';
+import SCHEMAS from '../../../../src/database/schemas'
+import { ACCOUNT_1, resetDatabase, TOKEN_1, USER_1 } from '../test.data'
 
 describe('/users', () => {
 
@@ -16,11 +17,11 @@ describe('/users', () => {
 
   beforeEach((done) => {
     resetDatabase()
-      .then(() => Promise.allSettled([
+      .then(() => Promise.all([
         new SCHEMAS.ACCOUNTS.model(ACCOUNT_1).save(),
         new SCHEMAS.USERS.model(USER_1).save(),
       ]))
-      .then((result) => {
+      .then(() => {
         done()
       })
   })
@@ -37,7 +38,7 @@ describe('/users', () => {
         return request(app)
           .get(`/rest/users/${USER_1.id}`)
           .then(response => {
-            expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
+            expect(response.statusCode).toBe(HttpUtils.HttpStatus.UNAUTHORIZED)
           })
       })
 
@@ -66,7 +67,7 @@ describe('/users', () => {
         return request(app)
           .patch(`/rest/users/${USER_1.id}`)
           .then(response => {
-            expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
+            expect(response.statusCode).toBe(HttpUtils.HttpStatus.UNAUTHORIZED)
           })
       })
 
@@ -86,7 +87,7 @@ describe('/users', () => {
         return request(app)
           .delete(`/rest/users/${USER_1.id}`)
           .then(response => {
-            expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
+            expect(response.statusCode).toBe(HttpUtils.HttpStatus.UNAUTHORIZED)
           })
       })
 
@@ -108,7 +109,7 @@ describe('/users', () => {
           return request(app)
             .get(`/rest/users/${USER_1.id}/members`)
             .then(response => {
-              expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
+              expect(response.statusCode).toBe(HttpUtils.HttpStatus.UNAUTHORIZED)
             })
         })
 
@@ -140,7 +141,7 @@ describe('/users', () => {
           return request(app)
             .get(`/rest/users/${USER_1.id}/participants`)
             .then(response => {
-              expect(response.statusCode).toBe(HttpUtils.HttpStatus.FORBIDDEN)
+              expect(response.statusCode).toBe(HttpUtils.HttpStatus.UNAUTHORIZED)
             })
         })
 

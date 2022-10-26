@@ -67,7 +67,7 @@ export const useAuth = function(req: any, res: any, next: any) {
       req.__context = data
       next()
     } else {
-      res.status(HttpUtils.HttpStatus.FORBIDDEN).send()
+      res.status(HttpUtils.HttpStatus.UNAUTHORIZED).send()
     }
   })
 }

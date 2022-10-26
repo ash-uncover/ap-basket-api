@@ -7,6 +7,7 @@ import {
   defaultDelete,
   defaultGetDeep,
   defaultGetAll,
+  checkExists,
 } from '../../rest/servlet-base'
 
 import Logger from '@uncover/js-utils-logger'

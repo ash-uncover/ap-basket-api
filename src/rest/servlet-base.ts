@@ -52,20 +52,6 @@ export const defaultGet = async (schema, req, res, next, onError) => {
   }
 }
 
-export const checkExists = async (schema, req, res, next, onError) => {
-  const id = req.params[`${schema.name}Id`]
-  try {
-    const data = await schema.model.findOne({ id }).select(FIELD_FILTERING).exec()
-    if (data) {
-      next()
-    } else {
-      res.sendStatus(HttpUtils.HttpStatus.NOT_FOUND)
-    }
-  } catch (error) {
-    handleError(error, res, onError)
-  }
-}
-
 export const defaultPut = async (schema, req, res, next, onError) => {
   const id = req.params[`${schema.name}Id`]
   try {
@@ -114,6 +100,74 @@ export const defaultGetDeep = async (schema, req, res, next, onError) => {
   try {
     const data = await schema.model.find(req.params).select(FIELD_FILTERING).exec()
     res.json(data)
+  } catch (error) {
+    handleError(error, res, onError)
+  }
+}
+
+export const checkExists = async (schema, req, res, next, onError) => {
+  const id = req.params[`${schema.name}Id`]
+  try {
+    const data = await schema.model.findOne({ id }).select(FIELD_FILTERING).exec()
+    if (data) {
+      next()
+    } else {
+      res
+        .status(HttpUtils.HttpStatus.NOT_FOUND)
+        .send({
+          error: `${schema.name.toUpperCase()}_NOT_FOUND`
+        })
+    }
+  } catch (error) {
+    handleError(error, res, onError)
+  }
+}
+
+export const checkExistsBody = async (schema, req, res, next, onError) => {
+  const id = req.body[`${schema.name}Id`]
+  try {
+    const data = await schema.model.findOne({ id }).select(FIELD_FILTERING).exec()
+    if (data) {
+      next()
+    } else {
+      res
+        .status(HttpUtils.HttpStatus.NOT_FOUND)
+        .send({
+          error: `${schema.name.toUpperCase()}_NOT_FOUND`
+        })
+    }
+  } catch (error) {
+    handleError(error, res, onError)
+  }
+}
+
+export const checkExistsDeep = async (schema, req, res, next, onError) => {
+  const id = req.body[`${schema.name}Id`]
+  try {
+    const data = await schema.model.findOne({ id }).select(FIELD_FILTERING).exec()
+    if (data) {
+      next()
+    } else {
+      res
+        .status(HttpUtils.HttpStatus.NOT_FOUND)
+        .send({
+          error: `${schema.name.toUpperCase()}_NOT_FOUND`
+        })
+    }
+  } catch (error) {
+    handleError(error, res, onError)
+  }
+}
+
+export const checkNotExists = async (schema, req, res, next, onError) => {
+  const id = req.params[`${schema.name}Id`]
+  try {
+    const data = await schema.model.findOne({ id }).select(FIELD_FILTERING).exec()
+    if (data) {
+      res.sendStatus(HttpUtils.HttpStatus.FORBIDDEN)
+    } else {
+      next()
+    }
   } catch (error) {
     handleError(error, res, onError)
   }
