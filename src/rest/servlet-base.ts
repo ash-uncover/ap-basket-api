@@ -65,7 +65,12 @@ export const defaultPut = async (schema, req, res, next, onError) => {
       res.sendStatus(HttpUtils.HttpStatus.NOT_FOUND)
     }
   } catch (error) {
-    handleError(error, res, onError)
+    // console.log(error)
+    if (error?._message?.endsWith('validation failed')) {
+      res.sendStatus(HttpUtils.HttpStatus.BAD_REQUEST)
+    } else {
+      handleError(error, res, onError)
+    }
   }
 }
 

@@ -138,18 +138,28 @@ export const SESSION_1 = {
   sectionId: 'section1',
   maxParticipants: 10,
   date: 1969246904449,
+  status: 'ACTIVE',
 }
 export const SESSION_2 = {
   id: 'session2',
   sectionId: 'section2',
   maxParticipants: 10,
   date: 1969246904449,
+  status: 'ACTIVE',
 }
 export const SESSION_3 = {
   id: 'session3',
   sectionId: 'section3',
   maxParticipants: 10,
   date: 1969246904449,
+  status: 'ACTIVE',
+}
+export const SESSION_4 = {
+  id: 'session4',
+  sectionId: 'section1',
+  maxParticipants: 10,
+  date: 1969246904449,
+  status: 'CANCELED',
 }
 
 export const PARTICIPANT_1 = {

@@ -135,11 +135,13 @@ export interface ISession extends DocumentBase {
   sectionId: string,
   maxParticipants: number,
   date: Date,
+  status: string,
 }
 export const SessionSchema = new mongoose.Schema(Object.assign({
   sectionId: { type: String, required: true },
   maxParticipants: { type: Number, required: true },
   date: { type: Date, required: true },
+  status: { type: String, required: true },
 }, SchemaBase))
 SessionSchema.pre('save', preSave)
 export const createSessionModel = () => mongoose.model<ISession>(SessionCollection, SessionSchema)
