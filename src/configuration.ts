@@ -3,7 +3,7 @@ const LOGGER = new Logger('CONFIG')
 
 //
 const CONFIG = {
-  ALPHA_BASKET_DATABASE_CONN: '',
+  ALPHA_BASKET_DATABASE_CONN: 'mongodb://127.0.0.1:4242/basket',
 
   ALPHA_BASKET_REST_PROTOCOL: 'http',
   ALPHA_BASKET_REST_HOST: 'localhost',
