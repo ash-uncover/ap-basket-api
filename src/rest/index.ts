@@ -17,7 +17,9 @@ import {
 } from '../rest/servlets/auth'
 
 import addMembersRoutes from '../rest/servlets/members'
+import addNewsRoutes from '../rest/servlets/news'
 import addParticipantsRoutes from '../rest/servlets/participants'
+import addPlacesRoutes from '../rest/servlets/places'
 import addSectionsRoutes from '../rest/servlets/sections'
 import addSessionsRoutes from '../rest/servlets/sessions'
 import addUsersRoutes from '../rest/servlets/users'
@@ -105,7 +107,9 @@ app.get('/auth', getAuth)
 app.delete('/auth', deleteAuth)
 
 addMembersRoutes(app)
+addNewsRoutes(app)
 addParticipantsRoutes(app)
+addPlacesRoutes(app)
 addSectionsRoutes(app)
 addSessionsRoutes(app)
 addUsersRoutes(app)

@@ -99,9 +99,11 @@ export const SectionName = 'section'
 export const SectionCollection = `${SectionName}s`
 export interface ISection extends DocumentBase {
   name: string,
+  description: string,
 }
 export const SectionSchema = new mongoose.Schema(Object.assign({
   name: { type: String, required: true },
+  description: { type: String, required: true },
 }, SchemaBase))
 SectionSchema.pre('save', preSave)
 export const createSectionModel = () => mongoose.model<ISection>(SectionCollection, SectionSchema)
@@ -168,6 +170,42 @@ export const createParticipantModel = () => mongoose.model<IParticipant>(Partici
 export const ParticipantModel = createParticipantModel()
 
 
+// PLACES collection
+export const PlaceName = 'place'
+export const PlaceCollection = `${PlaceName}s`
+export interface IPlace extends DocumentBase {
+  name: string,
+  description: string,
+  image: string,
+}
+export const PlaceSchema = new mongoose.Schema(Object.assign({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  image: { type: String, required: true },
+}, SchemaBase))
+PlaceSchema.pre('save', preSave)
+export const createPlaceModel = () => mongoose.model<IPlace>(PlaceCollection, PlaceSchema)
+export const PlaceModel = createPlaceModel()
+
+
+// NEWS collection
+export const NewName = 'new'
+export const NewCollection = `${NewName}s`
+export interface INew extends DocumentBase {
+  sectionId: string,
+  title: string,
+  content: string,
+}
+export const NewSchema = new mongoose.Schema(Object.assign({
+  sectionId: { type: String },
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+}, SchemaBase))
+NewSchema.pre('save', preSave)
+export const createNewModel = () => mongoose.model<INew>(NewCollection, NewSchema)
+export const NewModel = createNewModel()
+
+
 const SCHEMAS = {
   ACCOUNTS: {
     model: AccountModel,
@@ -198,6 +236,16 @@ const SCHEMAS = {
     model: ParticipantModel,
     name: ParticipantName,
     collection: ParticipantCollection,
+  },
+  PLACES: {
+    model: PlaceModel,
+    name: PlaceName,
+    collection: PlaceCollection,
+  },
+  NEWS: {
+    model: NewModel,
+    name: NewName,
+    collection: NewCollection,
   },
 }
 
